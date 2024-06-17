@@ -1,11 +1,18 @@
-function App () {
+import Navbar from "./components/Navbar";
+import HeroSection from "./components/HeroSection";
+
+
+
+
+const App = () => {
   return (
     <>
-      <h1>CapStone project</h1>
-      <h2>Project Name: Bird Guardian</h2>
-      <h3>Initialized a react/frontend application</h3>
+      <Navbar />
+      <div className="max-w-7xl mx-auto pt-20 px-6">
+        <HeroSection />
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
