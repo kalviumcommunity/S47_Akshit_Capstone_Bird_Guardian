@@ -1,4 +1,9 @@
-// import the videos
+
+
+
+//  videos  import
+import video1 from "../assets/video1.mp4";
+import video2 from "../assets/video2.mp4";
 
 const HeroSection = () => {
   return (
@@ -20,10 +25,10 @@ const HeroSection = () => {
           href="#"
           className="bg-gradient-to-r from-orange-500 to-orange-800 py-3 px-4 mx-3 rounded-md"
         >
-           add button name 
+          Start For Free  {/* Add link to sign in */}
         </a>
         <a href="#" className="py-3 px-4 mx-3 rounded-md border">
-        add button name 
+        Learn More {/* add a a document link regarding bird */}
         </a>
       </div>
       <div className="flex mt-10 justify-center">
@@ -33,7 +38,7 @@ const HeroSection = () => {
           muted
           className="rounded-lg w-1/2 border border-orange-700 shadow-sm shadow-orange-400 mx-2 my-4"
         >
-          <source src={""} type="video/mp4" />
+          <source src={video1} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <video
@@ -42,7 +47,7 @@ const HeroSection = () => {
           muted
           className="rounded-lg w-1/2 border border-orange-700 shadow-sm shadow-orange-400 mx-2 my-4"
         >
-          <source src={""} type="video/mp4" />
+          <source src={video2} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
