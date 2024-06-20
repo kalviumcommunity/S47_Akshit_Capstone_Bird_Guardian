@@ -3,13 +3,11 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
+const multer = require("multer"); // Add multer for file uploads
+const { connectDB, mongoose } = require('./config/dbConn');
 const PostModel = require('./models/Post');
 
-// Importing mongoDb from config
-const connectDB = require('./config/dbConn');
-
-// connect to DB
+// Connect to DB
 connectDB(process.env.DATABASE_URI);
 
 const app = express();
@@ -17,14 +15,37 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use(express.urlencoded({ extended: false }));
+/* When you fill out a form on a website and hit submit, the data from that form is sent to the server. The server needs to understand this
+ data to do something with it (like save it to a database). This line of code makes sure the server can understand the form data. */ 
+
+
+const upload = multer(); // Initialize multer
+
+
 // Routes
 app.get('/Post', async (req, res) => {
     try {
         const posts = await PostModel.find();
         res.json(posts);
     } catch (err) {
-        console.error(err); // Add logging for errors
-        res.status(500).json({ message: err.message });
+        console.error("Error fetching posts:", err);
+        res.status(500).json({ message: "An error occurred while fetching posts." });
+    }
+});
+
+app.post('/PostYourPosts', upload.single('photo'), async (req, res) => {
+    try {
+        const { body, file } = req;
+        const newPost = new PostModel({
+            ...body,
+            photo: file ? file.buffer : undefined // Handle file upload
+        });
+        await newPost.save();
+        res.status(201).json(newPost);
+    } catch (err) {
+        console.error("Error creating post:", err);
+        res.status(400).json({ message: "An error occurred while creating the post." });
     }
 });
 
