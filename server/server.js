@@ -24,6 +24,8 @@ const upload = multer(); // Initialize multer
 
 
 // Routes
+
+// get Method route
 app.get('/Post', async (req, res) => {
     try {
         const posts = await PostModel.find();
@@ -34,6 +36,8 @@ app.get('/Post', async (req, res) => {
     }
 });
 
+
+// Post/put Method route
 app.post('/PostYourPosts', upload.single('photo'), async (req, res) => {
     try {
         const { body, file } = req;
@@ -48,6 +52,37 @@ app.post('/PostYourPosts', upload.single('photo'), async (req, res) => {
         res.status(400).json({ message: "An error occurred while creating the post." });
     }
 });
+
+
+// update Method route
+app.put('/update/Post/:id', upload.single('photo'), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { body, file } = req;
+        const updateData = {
+            ...body,
+            photo: file ? file.buffer : undefined
+        };
+
+        // I am checking the id if prsent or not. (Validate ObjectId)
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "Invalid post ID" });
+        }
+
+        // Find and update the post
+        const updatedPost = await PostModel.findByIdAndUpdate(id, updateData, { new: true });
+
+        if (!updatedPost) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        res.json(updatedPost);
+    } catch (err) {
+        console.error("Error updating post:", err);
+        res.status(400).json({ message: "An error occurred while updating the post." });
+    }
+});
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

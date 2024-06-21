@@ -8,7 +8,23 @@ const PostSchema = new mongoose.Schema({
   address: { type: String, required: true },
   email: { type: String, required: true, match: [/.+\@.+\..+/, 'Please fill a valid email address'] },
   description: { type: String, required: true },
-}, { collection: 'Post' });
+}, { 
+  collection: 'Post',
+  toJSON: { 
+    versionKey: false, // Remove `__v`
+    transform: function (doc, ret) { 
+      delete ret.__v; // Ensure `__v` is removed
+      return ret;
+    }
+  },
+  toObject: { 
+    versionKey: false, // Remove `__v`
+    transform: function (doc, ret) { 
+      delete ret.__v; // Ensure `__v` is removed
+      return ret;
+    }
+  }
+});
 
 const PostModel = mongoose.model('Post', PostSchema);
 
