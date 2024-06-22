@@ -6,7 +6,7 @@ const PostSchema = new mongoose.Schema({
   birdColor: { type: String, required: true },
   photo: { type: Buffer }, // Change photo to Buffer for file uploads and make it optional
   address: { type: String, required: true },
-  email: { type: String, required: true, match: [/.+\@.+\..+/, 'Please fill a valid email address'] },
+  email: { type: String, required: true }, 
   description: { type: String, required: true },
 }, { 
   collection: 'Post',
