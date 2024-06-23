@@ -13,7 +13,7 @@
 
 //     const fetchPosts = async () => {
 //         try {
-//             const response = await axios.get('http://localhost:5000/Post'); // Ensure this matches your backend URL
+//             const response = await axios.get('http://localhost:5000/Post');
 //             setPosts(response.data);
 //         } catch (error) {
 //             console.error('Error fetching posts:', error);
@@ -51,8 +51,8 @@
 //                     ))}
 //                 </div>
 //                 <div className="flex justify-center mt-8">
-//                     <Link to="/managePost" className="bg-green-500 text-white py-2 px-4 rounded-md">
-//                         Manage Your Posts
+//                     <Link to="/CreatePost" className="bg-green-500 text-white py-2 px-4 rounded-md">
+//                         Create Post
 //                     </Link>
 //                 </div>
 //             </div>
