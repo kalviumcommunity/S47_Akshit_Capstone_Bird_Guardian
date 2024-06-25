@@ -19,10 +19,10 @@ import item2 from "../assets/OurStoreSectionItem2.jpg";
 import item3 from "../assets/OurStoreSectionItem3.jpg";
 
 export const navItems = [
-  { label: "Home", href: "#" },
-  { label: "About Us", href: "#" },
-  { label: "Contact Us", href: "#" },
-  { label: "Learn", href: "#" },
+  { label: "Home", to: "/" },
+  { label: "About Us", to: "/AboutUS" },
+  { label: "Contact Us", to: "/ContactUs" },
+  { label: "Learn", to: "/Learn" },
 ];
 
 export const testimonials = [
