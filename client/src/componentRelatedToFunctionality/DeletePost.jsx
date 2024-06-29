@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import Navbar from '../components/Navbar'; 
 import Footer from '../components/Footer'; 
 
 const DeletePost = () => {
@@ -20,7 +19,7 @@ const DeletePost = () => {
 
     return (
         <div>
-            <Navbar />
+            
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-3xl font-bold mb-6">Delete Post</h1>
                 <p className="mb-4">Are you sure you want to delete this post?</p>

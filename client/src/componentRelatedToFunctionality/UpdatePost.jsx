@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const UpdatePost = () => {
@@ -22,7 +21,7 @@ const UpdatePost = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const url = `${import.meta.env.VITE_APP_URL}/Post/${id}`;
+                const url = `${import.meta.env.VITE_APP_URL}/uploadPost/${id}`;
                 const response = await axios.get(url);
                 const { photo, ...restData } = response.data;
                 setFormData(restData);
@@ -67,7 +66,6 @@ const UpdatePost = () => {
 
     return (
         <div>
-            <Navbar />
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-3xl font-bold mb-6">Update Post</h1>
                 <form onSubmit={handleSubmit} className="space-y-4">

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import {useAuth} from '../store/Auth'
-
+import { toast } from 'react-toastify';
 const SignIn = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -36,15 +36,14 @@ const SignIn = () => {
         storeTokenInLS(resData.token);
         console.log("Form submitted successfully");
         setFormData({ email: "", password: "" });
+        toast.success("User logged in successfully");
         navigate("/AllPost");
-      } else {
-        console.log("Form submission failed");
-        alert("Invalid credentials. Please try again.");
-      }
+      } 
 
       console.log("Form submitted:", formData);
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error submitting form:", error.response.data);
+      toast.error(error.response.data.extraDetails ? error.response.data.extraDetails : error.response.data.message);
     }
   };
 
