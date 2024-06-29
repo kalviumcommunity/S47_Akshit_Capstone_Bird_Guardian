@@ -4,6 +4,9 @@ import { Fingerprint } from "lucide-react";
 import { ShieldHalf } from "lucide-react";
 import { ClipboardPlus } from 'lucide-react';
 import { GlobeLock } from "lucide-react";
+import { FaInstagramSquare } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
+import { FaWhatsappSquare } from "react-icons/fa";
 
 // Image of the person in testimonials
 
@@ -130,12 +133,25 @@ export const resourcesLinks = [
 export const platformLinks = [
   { href: "#", text: "OurStore" },
   { href: "#", text: "Bird-Gurdain" },
-  { href: "#", text: "About Us" },
-  { href: "#", text: "Contact US" },
+  { href: "/AboutUs", text: "About Us" },
+  { href: "/ContactUs", text: "Contact US" },
+];
+export const SocialMediaLink = [
+  {
+    href: "https://in.linkedin.com/",
+    icon: <FaLinkedin />,
+    text: "LinkedIn"
+  },
+  {
+    href: "https://www.instagram.com/",
+    icon: <FaInstagramSquare />,
+    text: "Instagram"
+  },
+  {
+    href: "https://web.whatsapp.com/",
+    icon: <FaWhatsappSquare />,
+    text: "WhatsApp"
+  }
 ];
 
-export const SocialMediaLink = [
-  { href: "#", text: "WhatsApp" },
-  { href: "#", text: "Instagram" },
-  { href: "#", text: "LinkedIn" }
-];
+

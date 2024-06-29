@@ -1,19 +1,21 @@
+import React, { useState } from 'react';
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
 import logo from "../assets/birdLogo.png";
 import { navItems } from "../constants";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../store/Auth";
 
-
 const Navbar = () => {
-
-   const {isLoggedIn} = useAuth();
-
+  const { isLoggedIn, LogoutUser } = useAuth();
+  const navigate = useNavigate();
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   const toggleNavbar = () => {
     setMobileDrawerOpen(!mobileDrawerOpen);
+  };
+
+  const handleLogout = () => {
+    LogoutUser(navigate);
   };
 
   return (
@@ -22,7 +24,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center flex-shrink-0">
             <img className="h-10 w-10 mr-2" src={logo} alt="Logo" />
-            <span className="text-xl tracking-tight">Bird-Gurdian</span>
+            <span className="text-xl tracking-tight">Bird-Guardian</span>
           </div>
           <ul className="hidden lg:flex ml-14 space-x-12">
             {navItems.map((item, index) => (
@@ -31,32 +33,27 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-
           <div className="hidden lg:flex justify-center space-x-12 items-center">
             {isLoggedIn ? (
-              <>
-                  <div className="hidden lg:flex justify-center space-x-12 items-center">
-                <NavLink
-                  to="/Logout"
-                  className="bg-gradient-to-r from-orange-500 to-orange-800 py-2 px-3 rounded-md"
-                >
-                  Logout
-                </NavLink>
-              </div>
-              </>
+              <button
+                onClick={handleLogout}
+                className="bg-gradient-to-r from-orange-500 to-orange-800 py-2 px-3 rounded-md"
+              >
+                Logout
+              </button>
             ) : (
               <>
-                <a href="/SignIn" className="py-2 px-3 border rounded-md">
+                <NavLink to="/SignIn" className="py-2 px-3 border rounded-md">
                   Sign In
-                </a>
-                <a
-                  href="/SignUp"
+                </NavLink>
+                <NavLink
+                  to="/SignUp"
                   className="bg-gradient-to-r from-orange-500 to-orange-800 py-2 px-3 rounded-md"
                 >
                   Create an account
-                </a>
+                </NavLink>
               </>
-            ) }
+            )}
           </div>
           <div className="lg:hidden md:flex flex-col justify-end">
             <button onClick={toggleNavbar}>
@@ -73,32 +70,28 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
-            <div className="hidden lg:flex justify-center space-x-12 items-center">
-            {isLoggedIn ? (
-              <>
-                  <div className="hidden lg:flex justify-center space-x-12 items-center">
-                <NavLink
-                  to="/Logout"
+            <div className="justify-center space-x-12 items-center">
+              {isLoggedIn ? (
+                <button
+                  onClick={handleLogout}
                   className="bg-gradient-to-r from-orange-500 to-orange-800 py-2 px-3 rounded-md"
                 >
                   Logout
-                </NavLink>
-              </div>
-              </>
-            ) : (
-              <>
-                <a href="/SignIn" className="py-2 px-3 border rounded-md">
-                  Sign In
-                </a>
-                <a
-                  href="/SignUp"
-                  className="bg-gradient-to-r from-orange-500 to-orange-800 py-2 px-3 rounded-md"
-                >
-                  Create an account
-                </a>
-              </>
-            ) }
-          </div>
+                </button>
+              ) : (
+                <>
+                  <NavLink to="/SignIn" className="py-2 px-3 border rounded-md">
+                    Sign In
+                  </NavLink>
+                  <NavLink
+                    to="/SignUp"
+                    className="bg-gradient-to-r from-orange-500 to-orange-800 py-2 px-3 rounded-md"
+                  >
+                    Create an account
+                  </NavLink>
+                </>
+              )}
+            </div>
           </div>
         )}
       </div>

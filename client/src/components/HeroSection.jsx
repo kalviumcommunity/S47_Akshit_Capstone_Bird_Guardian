@@ -1,35 +1,47 @@
-
-
-
-//  videos  import
+import { NavLink } from "react-router-dom";
 import video1 from "../assets/video1.mp4";
 import video2 from "../assets/video2.mp4";
+import { useAuth } from "../store/Auth";
+import { toast } from "react-toastify";
 
 const HeroSection = () => {
+  const { isLoggedIn } = useAuth();
   return (
     <div className="flex flex-col items-center mt-6 lg:mt-20">
       <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
-      Welcome to Bird 
+        Welcome to Bird{" "}
         <span className="bg-gradient-to-r from-orange-500 to-red-800 text-transparent bg-clip-text">
-          {" "} 
-          Guardian <br />  <span className="bg-gradient-to-r from-yellow-500 to-green-800  text-transparent bg-clip-text mx-2 lg:text-4xl text-2xl"> Your trusted companion in bird conservation </span> 
+          Guardian <br />{" "}
+          <span className="bg-gradient-to-r from-yellow-500 to-green-800 text-transparent bg-clip-text mx-2 lg:text-4xl text-2xl">
+            Your trusted companion in bird conservation
+          </span>{" "}
         </span>
       </h1>
       <p className="mt-10 text-lg text-center text-neutral-500 max-w-4xl">
-      At Bird Guardian, We&#39;re committed to understanding and enhancing the lives
-      of our feathered friends. Explore a comprehensive resource on bird behavior,
-      habitats, and conservation efforts.
+        At Bird Guardian, We're committed to understanding and enhancing the
+        lives of our feathered friends. Explore a comprehensive resource on bird
+        behavior, habitats, and conservation efforts.
       </p>
       <div className="flex justify-center my-10">
-        <a
-          href="#"
-          className="bg-gradient-to-r from-orange-500 to-orange-800 py-3 px-4 mx-3 rounded-md"
-        >
-          Start For Free  {/* Add link to sign in */}
-        </a>
-        <a href="#" className="py-3 px-4 mx-3 rounded-md border">
-        Learn More {/* add a a document link regarding bird */}
-        </a>
+        {isLoggedIn ? (
+          <NavLink
+            to="/AllPost"
+            className="bg-gradient-to-r from-orange-500 to-orange-800 py-3 px-4 mx-3 rounded-md"
+          >
+            Explore Our World
+          </NavLink>
+        ) : (
+          <NavLink
+            to="/SignIn"
+            className="bg-gradient-to-r from-orange-500 to-orange-800 py-3 px-4 mx-3 rounded-md"
+            onClick={() => toast.error("You need to sign in or sign up to access this page. To See Posts")}
+          >
+            Explore Our World
+          </NavLink>
+        )}
+        <NavLink to="/learn-more" className="py-3 px-4 mx-3 rounded-md border">
+          Learn More
+        </NavLink>
       </div>
       <div className="flex mt-10 justify-center">
         <video

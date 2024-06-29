@@ -13,24 +13,24 @@ const GetPost = async (req, res) => {
     try {
         // Retrieve posts from the database
         const posts = await PostModel.find();
-
-        // Map each post to a new object with optional photo URL
+    
+        // Map each post to a new object with optional photoSrc
         const postsWithPhotos = posts.map(post => {
-            if (post.photo) {
-                const base64Photo = post.photo.toString('base64');
-                const photoSrc = `data:image/jpeg;base64,${base64Photo}`;
-                return { ...post.toObject(), photoSrc };
-            } else {
-                return post.toObject();
-            }
+          if (post.photo) {
+            const base64Photo = Buffer.from(post.photo).toString('base64');
+            const photoSrc = `data:image/jpeg;base64,${base64Photo}`;
+            return { ...post.toObject(), photoSrc };
+          } else {
+            return post.toObject();
+          }
         });
-
+    
         res.json(postsWithPhotos);
-    } catch (err) {
+      } catch (err) {
         console.error("Error fetching posts:", err);
         res.status(500).json({ message: "An error occurred while fetching posts." });
-    }
-};
+      }
+    };
 
 
 // # ------------------ #
@@ -119,9 +119,6 @@ const DeletingPost = async (req, res) => {
 };
 
 
-
-
-
 // # ------------------ # 
 // Sign Up Logic
 // # ------------------ # 
@@ -187,16 +184,33 @@ const SignIn = async (req, res) => {
 };
 
 
+// # ------------------ # 
+// Logic to get data of auth user
+// # ------------------ # 
 const GetUser = async (req, res) => {
     try {
-        const users = await UserModel.find();
         const userData = req.GetUser;
         console.log(userData);
-        res.json({users, userData});
+        return res.status(200).json( {userData} ); 
       } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
       }
 };
 
+// # ------------------ # 
+// Logic to get all data of users
+// # ------------------ # 
+const OnlyToSeeUser = async (req, res) => {
+    try {
+        const SeeUser = await UserModel.find();
+        res.json(SeeUser);
+      } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+    }
 
-module.exports = {GetPost, SignIn, SignUp, GetUser, UploadingPost, UpdatingPost, DeletingPost}
+
+
+
+module.exports = {GetPost, SignIn, SignUp, GetUser, UploadingPost, UpdatingPost, DeletingPost, OnlyToSeeUser}
+

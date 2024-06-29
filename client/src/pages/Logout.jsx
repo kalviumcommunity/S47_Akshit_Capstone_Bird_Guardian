@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react'
-import { Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/Auth';
+import { toast } from 'react-toastify';
+
 
 const Logout = () => {
+  const { LogoutUser } = useAuth();
+  const navigate = useNavigate();
 
-    const {LogoutUser} = useAuth();
+  useEffect(() => {
+    LogoutUser(navigate);
+  }, [LogoutUser, navigate]);
 
-    useEffect(() => {
-        LogoutUser();
-    }, [LogoutUser]);
-
-    return <Navigate to = "/SignIn"/>
-
+  return null;
 };
 
-export default Logout; 
+export default Logout;
