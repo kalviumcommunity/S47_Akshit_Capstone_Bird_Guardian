@@ -8,3 +8,14 @@
   font-family: "Poppins", sans-serif;
   color-scheme: dark;
 }
+
+
+.toastBody {
+  font-family: "Poppins" ,sans-serif;
+  font-size: 1.3rem ;
+}
+
+.toastProgress {
+  background: #000000;
+}
+

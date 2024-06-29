@@ -1,4 +1,6 @@
 import { resourcesLinks, platformLinks, SocialMediaLink} from "../constants";
+
+
 const Footer = () => {
   return (
     <footer className="mt-20 border-t py-10 border-neutral-700">
@@ -40,9 +42,10 @@ const Footer = () => {
               <li key={index}>
                 <a
                   href={link.href}
-                  className="text-neutral-300 hover:text-white"
+                  className="text-neutral-300 hover:text-white flex items-center space-x-2"
                 >
-                  {link.text}
+                  {link.icon}
+                  <span>{link.text}</span>
                 </a>
               </li>
             ))}
