@@ -23,3 +23,5 @@ At our core, we believe that knowledge, compassion, and action are the keys to c
 -> 4. On the fourth day, I will setup client-side/front-end.
 
 -> 5. On the fourth day, I will setup server-side.
+
+Server deployment Link : https://s47-akshit-capstone-bird-guardian.onrender.com
