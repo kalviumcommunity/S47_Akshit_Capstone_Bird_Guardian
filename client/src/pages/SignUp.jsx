@@ -5,13 +5,14 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import {useAuth} from '../store/Auth'
 
+import { toast } from 'react-toastify';
+
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: ""
   });
-  const [error, setError] = useState(null);
 
 
   const navigate = useNavigate();
@@ -26,17 +27,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Client-side validation
-    if (!validateEmail(formData.email)) {
-      setError("Invalid email format");
-      return;
-    }
-  
-    if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters long");
-      return;
-    }
+    console.log(formData)
   
     try {
       const url = `${import.meta.env.VITE_APP_URL}/postusers`;
@@ -46,27 +37,28 @@ const SignUp = () => {
         }
       });
 
-      if (response.status === 200) {
-        const resData = await response.json();
-        console.log("res from server" , resData);
+      console.log(response);
+
+      const resData = await response.data;
+      console.log("res from server", resData.message);
+
+      if (response.status === 201 || response.status === 200) {
+
         // Store the token in local storage
         storeTokenInLS(resData.token);
         console.log("Form submitted successfully");
         setFormData({ name: "", email: "", password: "" });
+        toast.success("User created successfully");
         navigate("/AllPost");
-      }
-  
-      // Placeholder for form submission logic
-      console.log("Form submitted:", response.data);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      // Handle error response
-    }
-  };
+      } 
 
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
+      console.log("Form submitted:", resData);
+
+      
+    } catch (error) {
+      console.error(error.response.data);
+      toast.error(error.response.data.extraDetails ? error.response.data.extraDetails : error.response.data.message);
+    }
   };
 
   return (
@@ -114,7 +106,6 @@ const SignUp = () => {
           <button type="button" className="bg-gray-100 text-gray-700 py-2 px-4 rounded-md mb-4 block w-full flex items-center justify-center">
             Continue with Google
           </button>
-          {error && <p className="text-red-500">{error}</p>}
         </form>
         <p className="text-gray-700 text-center">
           Already have an account? <Link to="/SignIn" className="text-blue-500">Sign In</Link>
