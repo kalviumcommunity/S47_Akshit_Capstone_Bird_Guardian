@@ -8,12 +8,12 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const authMiddleware = require('../middlewares/auth-middleware');
 
-router.route('/signup').post( validate(Schema.signupSchema), logic.SignUp)
+router.route('/signup').post( validate(Schema.signupSchema), logic.signUp)
 
-router.route('/signin').post( validate(Schema.signinSchema) , logic.SignIn)
+router.route('/signin').post( validate(Schema.signinSchema) , logic.signIn)
 
-router.route('/me').get( authMiddleware , logic.GetUser)
+router.route('/me').get( authMiddleware , logic.getUser)
 
-router.route('/users').get(logic.OnlyToSeeUser)
+router.route('/users').get(logic.getUsers)
 
 module.exports = router;

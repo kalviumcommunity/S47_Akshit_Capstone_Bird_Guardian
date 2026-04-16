@@ -10,12 +10,17 @@
 }
 
 
-.toastBody {
-  font-family: "Poppins" ,sans-serif;
-  font-size: 1.3rem ;
+.Toastify__toast {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.875rem;
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
 }
 
-.toastProgress {
-  background: #000000;
+.Toastify__progress-bar {
+  height: 3px;
 }
 
+.Toastify__toast-container--top-right {
+  top: 5rem !important;
+}

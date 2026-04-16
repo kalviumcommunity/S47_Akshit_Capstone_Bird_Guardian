@@ -11,38 +11,60 @@ import Navbar from './components/Navbar';
 import CreatePost from './pages/Posts/CreatePost';
 import Logout from './pages/Logout';
 import 'react-toastify/dist/ReactToastify.css';
-import DeletePost from './pages/Posts/DeletePost';
+
 import UpdatePost from './pages/Posts/UpdatePost';
+import UnderConstruction from './pages/UnderConstruction';
+import MyPosts from './pages/Posts/MyPosts';
+import ViewPost from './pages/Posts/ViewPost';
+import ProtectedRoute from './components/shared/ProtectedRoute';
 
 const App = () => {
-
   return (
-    <>
-
-    
     <BrowserRouter>
-    <Navbar/>
-
+      <Navbar />
       <Routes>
-  
+        {/* Public Routes */}
         <Route path="/" element={<MainHomePage />} />
-        <Route path="/AboutUs" element={<AboutUs/>} /> 
-        <Route path="/ContactUs"  element={<ContactUs/>}/>
-        <Route path="/Learn"  element={<Learn/>}/>
-        <Route path="/SignIn"  element={<SignIn/>}/>
-        <Route path="/SignUp"  element={<SignUp/>}/>
-        <Route path="*"  element={<Error/>}/>
-        <Route path="/AllPost"  element={<AllPost/>}/>
-        <Route path="/Logout"  element={<Logout/>}/>
-        <Route path="/CreatePost"  element={<CreatePost/>}/>
-        <Route path="/deletePost/:id"  element={<DeletePost/>}/>
-        <Route path="/updatePost/:id"  element={<UpdatePost/>}/>
+        <Route path="/about-us" element={<AboutUs />} /> 
+        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/learn" element={<Learn />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/posts" element={<AllPost />} />
+        <Route path="/posts/:id" element={<ViewPost />} />
+        <Route path="/our-store" element={<UnderConstruction />} />
+        <Route path="/logout" element={<Logout />} />
+        
+        {/* Protected Routes */}
+        <Route 
+          path="/create-post" 
+          element={
+            <ProtectedRoute>
+              <CreatePost />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/update-post/:id" 
+          element={
+            <ProtectedRoute>
+              <UpdatePost />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/my-posts" 
+          element={
+            <ProtectedRoute>
+              <MyPosts />
+            </ProtectedRoute>
+          } 
+        />
 
-         
+        {/* Catch-all Error Route */}
+        <Route path="*" element={<Error />} />
       </Routes>
-
     </BrowserRouter>
-    </>
   );
 };
 

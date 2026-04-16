@@ -1,79 +1,177 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
-
-import { Link, NavLink, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Footer from '../components/Footer';
-import { useAuth } from '../context/Auth';
+import { Search, Filter, SortAsc, PlusCircle, LayoutGrid } from 'lucide-react';
+import { useAuth } from '../../context/Auth';
+import Layout from '../../components/layout/Layout';
+import BirdCard from '../../components/shared/BirdCard';
+import { CardSkeleton } from '../../components/ui/Skeleton';
 
 const AllPost = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
   const [posts, setPosts] = useState([]);
   const [errorToastShown, setErrorToastShown] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Filtering & Search states
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedType, setSelectedType] = useState('All');
+  const [sortBy, setSortBy] = useState('newest');
 
   useEffect(() => {
-    if (!isLoggedIn && !errorToastShown) {
-      toast.error("You need to sign in or sign up to access this page.To See Posts");
-      setErrorToastShown(true);
-    } else {
-      fetchPosts();
-    }
-  }, [isLoggedIn, errorToastShown]);
+    fetchPosts();
+  }, []);
 
   const fetchPosts = async () => {
+    setIsLoading(true);
     try {
       const url = `${import.meta.env.VITE_APP_URL}/posts/`;
       const response = await axios.get(url);
       setPosts(response.data);
     } catch (error) {
       console.error('Error fetching posts:', error);
+      toast.error("Failed to fetch posts");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const getBase64Image = (photo) => {
-    return photo ? `data:image/jpeg;base64,${btoa(new Uint8Array(photo.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}` : null;
-  };
+  // Derive unique bird types for filter
+  const birdTypes = useMemo(() => {
+    const types = new Set(posts.map(p => p.birdType));
+    return ['All', ...Array.from(types).sort()];
+  }, [posts]);
 
-  if (!isLoggedIn) {
-    return <Navigate to="/SignIn" />;
-  }
+  // Filter and Search Logic
+  const filteredPosts = useMemo(() => {
+    let result = [...posts];
+
+    // Search
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(p => 
+        p.name.toLowerCase().includes(query) || 
+        p.address.toLowerCase().includes(query) ||
+        p.birdType.toLowerCase().includes(query)
+      );
+    }
+
+    // Type Filter
+    if (selectedType !== 'All') {
+      result = result.filter(p => p.birdType === selectedType);
+    }
+
+    // Sort
+    result.sort((a, b) => {
+      if (sortBy === 'newest') return new Date(b.createdAt) - new Date(a.createdAt);
+      if (sortBy === 'oldest') return new Date(a.createdAt) - new Date(b.createdAt);
+      if (sortBy === 'name') return a.name.localeCompare(b.name);
+      return 0;
+    });
+
+    return result;
+  }, [posts, searchQuery, selectedType, sortBy]);
+
+
+
+  const extraActions = (
+    <Link
+      to="/create-post"
+      className="flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white py-3 px-6 rounded-xl shadow-lg shadow-orange-500/20 transition-all hover:scale-105 active:scale-95 font-bold"
+    >
+      <PlusCircle className="w-5 h-5" />
+      <span className="hidden sm:inline">Report Sighting</span>
+      <span className="sm:hidden">Report</span>
+    </Link>
+  );
 
   return (
-    <div>
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Posts</h1>
-        <div className="flex justify-end mb-4">
+    <Layout 
+      title="Bird Sightings" 
+      subtitle="Discover and track rescued or sighted birds in your community. Every report helps conservation."
+      extraActions={extraActions}
+    >
+      {/* Filtering Section */}
+      <div className="bg-neutral-900/50 backdrop-blur-md border border-neutral-800 rounded-2xl p-4 mb-10 flex flex-col md:flex-row gap-4 items-center">
+        <div className="relative w-full md:flex-1">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+          <input 
+            type="text"
+            placeholder="Search by name, location, or type..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-orange-500/50 transition-colors"
+          />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.map(post => (
-            <div key={post._id} className="border p-4 rounded-lg shadow-lg">
-              <h2 className="text-xl font-semibold">{post.name}</h2>
-              <p>Type: {post.birdType}</p>
-              <p>Color: {post.birdColor}</p>
-              {post.photo && <img src={getBase64Image(post.photo)} alt="Bird" className="w-full h-auto mb-4" />}
-              <p>Address: {post.address}</p>
-              <p>Email: {post.email}</p>
-              <p>Description: {post.description}</p>
-              <div className="flex justify-between mt-4">
-                <NavLink to={`/UpdatePost/${post._id}`} className="bg-blue-500 text-white py-2 px-4 rounded-md">
-                  Update
-                </NavLink>
-                <NavLink to={`/DeletePost/${post._id}`}  className="bg-red-500 text-white py-2 px-4 rounded-md">
-                  Delete
-                </NavLink>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-center mt-8">
-          <Link to="/CreatePost" className="bg-green-500 text-white py-2 px-4 rounded-md">
-            Create Post
-          </Link>
+        
+        <div className="flex gap-4 w-full md:w-auto">
+          <div className="relative flex-1 md:w-48">
+            <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+            <select 
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="w-full bg-neutral-950 border border-neutral-800 rounded-xl py-3 pl-10 pr-4 text-white appearance-none focus:outline-none focus:border-orange-500/50 transition-colors cursor-pointer text-sm"
+            >
+              {birdTypes.map(type => (
+                <option key={type} value={type}>{type}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="relative flex-1 md:w-48">
+            <SortAsc className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+            <select 
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="w-full bg-neutral-950 border border-neutral-800 rounded-xl py-3 pl-10 pr-4 text-white appearance-none focus:outline-none focus:border-orange-500/50 transition-colors cursor-pointer text-sm"
+            >
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="name">Bird Name</option>
+            </select>
+          </div>
         </div>
       </div>
-      <Footer />
-    </div>
+
+      {/* Content Section */}
+      {isLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map(i => <CardSkeleton key={i} />)}
+        </div>
+      ) : filteredPosts.length === 0 ? (
+        <div className="text-center py-24 bg-neutral-950 border border-neutral-900 rounded-3xl border-dashed">
+          <LayoutGrid className="w-16 h-16 text-neutral-800 mx-auto mb-6" />
+          <h3 className="text-2xl text-neutral-300 font-bold mb-2">No sightings found</h3>
+          <p className="text-neutral-500 max-w-sm mx-auto">
+            {searchQuery || selectedType !== 'All' 
+              ? "Try adjusting your search filters to find what you're looking for." 
+              : "Be the first to share a bird record with the community!"}
+          </p>
+          {(searchQuery || selectedType !== 'All') && (
+            <button 
+              onClick={() => { setSearchQuery(''); setSelectedType('All'); }}
+              className="mt-6 text-orange-500 hover:text-orange-400 font-bold transition-colors"
+            >
+              Clear all filters
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredPosts.map((post, index) => (
+            <BirdCard 
+              key={post._id} 
+              post={post} 
+              index={index}
+              isOwner={false}
+            />
+          ))}
+        </div>
+      )}
+    </Layout>
   );
 };
 
 export default AllPost;
+

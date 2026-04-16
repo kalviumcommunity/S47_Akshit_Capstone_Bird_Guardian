@@ -7,7 +7,7 @@ const UserModel = require('../models/User');
 
 
 
-const SignUp = async (req, res) => {
+const signUp = async (req, res, next) => {
     try {
         const { name, email, password } = req.body;
 
@@ -37,7 +37,7 @@ const SignUp = async (req, res) => {
 
 
 
-const SignIn = async (req, res) => {
+const signIn = async (req, res, next) => {
     try{
         const {email, password} = req.body;
 
@@ -61,7 +61,7 @@ const SignIn = async (req, res) => {
 
 
 
-const GetUser = async (req, res) => {
+const getUser = async (req, res, next) => {
     try {
         const userData = req.GetUser;
         
@@ -73,7 +73,7 @@ const GetUser = async (req, res) => {
 
 
 
-const OnlyToSeeUser = async (req, res) => {
+const getUsers = async (req, res, next) => {
     try {
         const SeeUser = await UserModel.find();
         res.json(SeeUser);
@@ -85,4 +85,4 @@ const OnlyToSeeUser = async (req, res) => {
 
 
 
-module.exports = {SignIn, SignUp, GetUser, OnlyToSeeUser}
+module.exports = { signIn, signUp, getUser, getUsers };
