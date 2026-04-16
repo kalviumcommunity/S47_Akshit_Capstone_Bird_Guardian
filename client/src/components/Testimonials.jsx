@@ -8,10 +8,10 @@ const Testimonials = () => {
       </h2>
       <div className="flex flex-wrap justify-center">
         {testimonials.map((testimonial, index) => (
-          <div key={index} className="w-full sm:w-1/2 lg:w-1/3 px-4 py-2">
-            <div className="bg-neutral-900 rounded-md p-6 text-md border border-neutral-800 font-thin">
-              <p>{testimonial.text}</p>
-              <div className="flex mt-8 items-start">
+          <div key={index} className="w-full sm:w-1/2 lg:w-1/3 px-4 py-4">
+            <div className="bg-neutral-900 rounded-xl p-6 text-md border border-neutral-800 font-thin h-full flex flex-col justify-between hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/10 transition-all duration-300">
+              <p className="text-neutral-300 leading-relaxed">"{testimonial.text}"</p>
+              <div className="flex mt-8 items-center">
                 <img
                   className="w-12 h-12 mr-6 rounded-full border border-neutral-300"
                   src={testimonial.image}

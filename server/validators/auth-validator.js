@@ -1,6 +1,5 @@
 const { z } = require("zod");
 
-// Creating an object schema
 const signupSchema = z.object({
   name: z
     .string({ required_error: "Name is required" })

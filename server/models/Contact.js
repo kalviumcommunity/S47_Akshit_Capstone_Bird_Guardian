@@ -7,23 +7,21 @@ const ContactSchema = new Schema({
 }, { 
     collection: 'Contact',
     toJSON: { 
-      versionKey: false, // Remove `__v`
+      versionKey: false,
       transform: function (doc, ret) { 
-        delete ret.__v; // Ensure `__v` is removed
+        delete ret.__v;
         return ret;
       }
     },
     toObject: { 
-      versionKey: false, // Remove `__v`
+      versionKey: false,
       transform: function (doc, ret) { 
-        delete ret.__v; // Ensure `__v` is removed
+        delete ret.__v;
         return ret;
       }
     }
 });
 
-
-// create a model or collection
 const ContactModel = model('Contact', ContactSchema);
 
 module.exports = ContactModel

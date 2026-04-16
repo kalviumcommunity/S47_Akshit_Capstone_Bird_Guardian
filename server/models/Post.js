@@ -4,23 +4,25 @@ const PostSchema = new mongoose.Schema({
   name: { type: String, required: true },
   birdType: { type: String, required: true },
   birdColor: { type: String, required: true },
-  photo: { type: Buffer }, // Change photo to Buffer for file uploads and make it optional
+  photo: { type: Buffer },
   address: { type: String, required: true },
   email: { type: String, required: true }, 
   description: { type: String, required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 }, { 
   collection: 'Post',
+  timestamps: true,
   toJSON: { 
-    versionKey: false, // Remove `__v`
+    versionKey: false,
     transform: function (doc, ret) { 
-      delete ret.__v; // Ensure `__v` is removed
+      delete ret.__v;
       return ret;
     }
   },
   toObject: { 
-    versionKey: false, // Remove `__v`
+    versionKey: false,
     transform: function (doc, ret) { 
-      delete ret.__v; // Ensure `__v` is removed
+      delete ret.__v;
       return ret;
     }
   }

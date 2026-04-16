@@ -1,8 +1,4 @@
-# main
-
 # S47_Akshit_Capstone_Bird_Guardian
-
-This is your first repository
 
 # Idea brief:
 
@@ -12,17 +8,5 @@ Additionally, our website serves as a platform for reporting sightings of endang
 In our e-commerce section, you'll find a curated selection of products designed to enhance the lives of both wild and pet birds. Whether it's a cozy nest box for your backyard visitors or premium bird feed to attract a variety of species, every purchase contributes to our conservation initiatives. We believe in harnessing the power of commerce for good, using a portion of the proceeds to fund critical conservation projects and support our ongoing efforts to protect bird populations.
 At our core, we believe that knowledge, compassion, and action are the keys to creating a brighter future for birds. By exploring our website, you're joining a community of like-minded individuals dedicated to making a meaningful difference in the lives of our avian companions. Together, we can build a world where birds thrive, and their beauty and diversity inspire generations to come. Welcome to our flock.
 
-# Plan of action
-
--> 1. On the first day, I will create a readme file and set up my project.
-
--> 2. On the Second day, I will think of my UI and website blueprint.
-
--> 3. On the Third day, will make a low fid prototype.
-
--> 4. On the fourth day, I will setup client-side/front-end.
-
--> 5. On the fourth day, I will setup server-side.
-
-Server deployment Link : https://s47-akshit-capstone-bird-guardian.onrender.com
-Mainwebsiteorfrontend : https://s47-akshit-capstone-bird-guardian-1.onrender.com
+### Server deployment Link : https://s47-akshit-capstone-bird-guardian.onrender.com
+### Mainwebsiteorfrontend : https://s47-akshit-capstone-bird-guardian-1.onrender.com

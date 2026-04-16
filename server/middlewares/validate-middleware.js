@@ -1,4 +1,4 @@
-const validate = (schema) => async (req, res, next) => {  // schema means signinSchema that we are passing from auth-validator.js
+const validate = (schema) => async (req, res, next) => {
     try {
       const parseBody = await schema.parseAsync(req.body);
       req.body = parseBody;
@@ -7,7 +7,7 @@ const validate = (schema) => async (req, res, next) => {  // schema means signin
       const status = 422;
       const message = "Fill the input properly";
       const extraDetails = err.errors[0].message
-    //   const extraDetails = err.issues.map((curElem) => curElem.message);
+
   
       const error = {
         status,
@@ -15,7 +15,7 @@ const validate = (schema) => async (req, res, next) => {  // schema means signin
         extraDetails,
       };
 
-      console.log(error)
+      
   
       next(error);
     }

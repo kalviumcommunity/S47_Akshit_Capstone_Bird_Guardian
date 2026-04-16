@@ -8,11 +8,11 @@ const authMiddleware = async (req, res, next) => {
         return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    console.log('token from auth middleware' , token);
+    
 
     const jwtToken = token.replace('Bearer ', '').trim();
 
-    console.log('jwtToken from auth middleware' , jwtToken);
+    
 
     try {
 
@@ -26,7 +26,7 @@ const authMiddleware = async (req, res, next) => {
         req.GetUser = userData;
         req.token = jwtToken;
         req.userID = userData._id;     
-        console.log(userData);
+        
         next();
 
 

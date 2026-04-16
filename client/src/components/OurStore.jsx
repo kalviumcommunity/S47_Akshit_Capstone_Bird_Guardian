@@ -9,11 +9,11 @@ const OurStore = () => {
       </h2>
       <div className="flex flex-wrap">
       {StoreItems.map((item, index) => {
-        // Iterate through the properties of each item
+
         for (let key in item) {
-          // Access the image URL
+
           const imageUrl = item[key];
-          // Render an image element with the URL and specified styling
+
           return (
             <div key={index} className="w-full sm:w-1/2 lg:w-1/3 p-2">
               <div className="p-10 border border-neutral-700 rounded-xl">
