@@ -8,7 +8,6 @@ import { FaInstagramSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaWhatsappSquare } from "react-icons/fa";
 
-// Image of the person in testimonials
 
 import SunnyPhoto from "../assets/Sunny.jpg"
 import DarshanPhoto from "../assets/Darshan.jpg"
@@ -23,9 +22,9 @@ import item3 from "../assets/OurStoreSectionItem3.jpg";
 
 export const navItems = [
   { label: "Home", to: "/" },
-  { label: "About Us", to: "/AboutUS" },
-  { label: "Contact Us", to: "/ContactUs" },
-  { label: "Learn", to: "/Learn" },
+  { label: "About Us", to: "/about-us" },
+  { label: "Contact Us", to: "/contact-us" },
+  { label: "Learn", to: "/learn" },
 ];
 
 export const testimonials = [
@@ -124,17 +123,10 @@ export const StoreItems = [
   },
 ];
 
-export const resourcesLinks = [
-  { href: "#", text: "Getting Started" },
-  { href: "#", text: "Documentation" },
-  { href: "#", text: "Tutorials" }
-];
-
 export const platformLinks = [
-  { href: "#", text: "OurStore" },
-  { href: "#", text: "Bird-Gurdain" },
-  { href: "/AboutUs", text: "About Us" },
-  { href: "/ContactUs", text: "Contact US" },
+  { href: "/our-store", text: "OurStore" },
+  { href: "/about-us", text: "About Us" },
+  { href: "/contact-us", text: "Contact Us" },
 ];
 export const SocialMediaLink = [
   {
